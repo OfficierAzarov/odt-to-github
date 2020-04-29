@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "Where is your text saved?"
+read folder
+cd "${folder}"
+echo "You are here :"
+pwd
+echo "You have these files :"
+ls
+echo "What .odt file would you like to log to GitHub?"
+read name
+cp "${name}.odt" "${name}-copy.odt"
+echo "Where is your GitHub folder?"
+read githubfolder
+mv "${name}-copy.odt" "${githubfolder}"
+cd "${githubfolder}"
+odt2txt --output="${name}-copy.txt" "${name}-copy.odt"
+git add .
+echo "Commit comment?"
+read comment
+git commit -m "$comment"
+echo "What branch?"
+read branch
+git push origin $branch
